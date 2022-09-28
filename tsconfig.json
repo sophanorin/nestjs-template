@@ -27,7 +27,7 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true, // https://github.com/Microsoft/TypeScript/issues/2577
     "esModuleInterop": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
   },
   "include": ["typings/global.d.ts", "src/**/*", "test/**/*"],
   "exclude": ["node_modules"]

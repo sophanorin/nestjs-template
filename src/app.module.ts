@@ -24,6 +24,7 @@ import { UserModule } from './sample';
     TypeOrmModule.forRootAsync({
       useFactory: (config: ConfigService):
       Promise<TypeOrmModuleOptions> | TypeOrmModuleOptions => ({
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
         ...config.get('db'),
       }),
       inject: [ConfigService],
