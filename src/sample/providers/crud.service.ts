@@ -15,8 +15,12 @@ export class CrudService {
     return this.table.save(data);
   }
 
-  public async read(id: number): Promise<User | undefined> {
-    return this.table.findOne(id);
+  public async read(id: number): Promise<User | null> {
+    return this.table.findOne({
+      where: {
+        id,
+      },
+    });
   }
 
   public async update(id: number, data: Partial<User>): Promise<UpdateResult> {

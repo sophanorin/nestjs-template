@@ -1,9 +1,7 @@
 import { Controller, Post, UploadedFiles } from '@nestjs/common';
-import { ApiFileFields } from 'src/common/decorators/api-file-fields.decorator';
-import { ApiFile } from 'src/common/decorators/api-files.decorator';
-// import { fileMimetypeFilter } from 'src/common/filters/file-mimetype.filter';
+
+import { ParseFile, ApiFile, ApiFileFields } from '../../common';
 import { S3Service } from '../providers/s3.service';
-import { ParseFile } from 'src/common/pipes/parse-file.pipe';
 // import { fileMimetypeFilter } from 'src/common/filters/file-mimetype.filter';
 
 /**
@@ -17,7 +15,7 @@ export class S3BucketController {
   // @ApiFile('file', true, 1, { fileFilter: fileMimetypeFilter('image') })
   // @ApiImageFile('file', true)
   @ApiFile('files', true, 2)
-  uploadFiles(@UploadedFiles(ParseFile) files: Array<Express.Multer.File>) {
+  public async uploadFiles(@UploadedFiles(ParseFile) files: Array<Express.Multer.File>): Promise<any[]> {
     return this.s3.uploadMultipleFiles(files);
   }
 
@@ -26,7 +24,7 @@ export class S3BucketController {
     { name: 'avatar', maxCount: 1, required: true },
     { name: 'background', maxCount: 1 },
   ])
-  uploadMultipleFiles(@UploadedFiles(ParseFile) files: Express.Multer.File[]) {
+  public uploadMultipleFiles(@UploadedFiles(ParseFile) files: Express.Multer.File[]): Express.Multer.File[] {
     return files;
   }
 }

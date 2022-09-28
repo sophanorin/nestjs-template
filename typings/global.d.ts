@@ -16,6 +16,24 @@ export declare global {
       DB_NAME: string;
 
       JWT_SECRET: string;
+      COOKIE_SECRET: string;
+
+      CACHE_TTL: number;
+      CACHE_DRIVER: string;
+      REDIS_HOST: string;
+      REDIS_PORT: number;
+      REDIS_USERNAME: string;
+      REDIS_PASSWORD: string;
+
+      MONGO_URI: string;
+      MONGO_USERNAME: string;
+      MONGO_PASSWORD: string;
+      MONGO_DATABASE: string;
+
+      ACCESS_KEY_ID: string;
+      SECRET_ACCESS_KEY: string;
+      REGION: string;
+      BUCKET: string;
     }
   }
 

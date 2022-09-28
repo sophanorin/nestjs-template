@@ -6,11 +6,12 @@ import passport from 'passport';
 
 export function middleware(app: INestApplication): INestApplication {
   const isProduction = (process.env.NODE_ENV === 'production');
+  const cookieSecret = process.env.COOKIE_SECRET || 'tEsTeD';
 
   app.use(compression());
   app.use(session({
     // Requires 'store' setup for production
-    secret: 'tEsTeD',
+    secret: cookieSecret,
     resave: false,
     saveUninitialized: true,
     cookie: { secure: isProduction },

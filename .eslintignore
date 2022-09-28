@@ -1,0 +1,6 @@
+// .eslintignore
+build/*
+public/*
+bin/*
+dist/*
+jest.config.js

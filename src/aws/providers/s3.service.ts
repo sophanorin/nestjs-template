@@ -15,23 +15,23 @@ export class S3Service {
 
   constructor(private aws: AwsService) {}
 
-  public async uploadMultipleFiles(files: Array<Express.Multer.File>) {
-    return Promise.all(files.map(async (file) => await this.upload(file)));
+  public async uploadMultipleFiles(files: Array<Express.Multer.File>): Promise<any[]> {
+    return Promise.all(files.map(async (file: Express.Multer.File) => this.upload(file)));
   }
 
-  public async upload(file: Express.Multer.File) {
+  public async upload(file: Express.Multer.File): Promise<any> {
     const { originalname } = file;
-    return await this.uploadS3(file.buffer, BUCKET_NAME, originalname);
+    return this.uploadS3(file.buffer, BUCKET_NAME, originalname);
   }
 
-  async uploadS3(file: Buffer, bucket: string, name: string): Promise<any> {
+  public async uploadS3(file: Buffer, bucket: string, name: string): Promise<any> {
     const params: PutObjectRequest = {
       ACL: 'public-read',
       Bucket: bucket,
       Key: String(name),
       Body: file,
     };
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve: (v: unknown) => void, reject: (r: any) => void) => {
       this.s3.upload(params, (err: { message: any }, data: unknown) => {
         if (err) {
           reject(err.message);
