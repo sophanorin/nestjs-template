@@ -8,30 +8,30 @@ import { Ec2Service } from '../providers';
  */
 @Controller('instance')
 export class InstanceController {
-  constructor(private instance: Ec2Service) {}
+    constructor(private instance: Ec2Service) {}
 
-  @Get('list')
-  public async list(): Promise<ReservationList> {
-    const result: DescribeInstancesResult = await this.instance.describeInstances();
+    @Get('list')
+    public async list(): Promise<ReservationList> {
+        const result: DescribeInstancesResult = await this.instance.describeInstances();
 
-    if (!result.Reservations) {
-      throw new NotFoundException('NotFoundReservations');
+        if (!result.Reservations) {
+            throw new NotFoundException('NotFoundReservations');
+        }
+
+        return result.Reservations;
     }
 
-    return result.Reservations;
-  }
+    @Post('status')
+    public async status(@Body('ids') ids: string[]): Promise<InstanceStatusList> {
+        if (!ids || !Array.isArray(ids)) {
+            throw new BadRequestException('InvalidParameter');
+        }
 
-  @Post('status')
-  public async status(@Body('ids') ids: string[]): Promise<InstanceStatusList> {
-    if (!ids || !Array.isArray(ids)) {
-      throw new BadRequestException('InvalidParameter');
+        const result: DescribeInstanceStatusResult = await this.instance.describeInstanceStatus(ids);
+        if (!result.InstanceStatuses) {
+            throw new NotFoundException('NotFoundInstanceStatuses');
+        }
+
+        return result.InstanceStatuses;
     }
-
-    const result: DescribeInstanceStatusResult = await this.instance.describeInstanceStatus(ids);
-    if (!result.InstanceStatuses) {
-      throw new NotFoundException('NotFoundInstanceStatuses');
-    }
-
-    return result.InstanceStatuses;
-  }
 }

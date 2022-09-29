@@ -1,11 +1,11 @@
 export interface JwtPayload {
-  sub: string;
-  username: string;
-  roles: string[];
+    sub: string;
+    username: string;
+    roles: string[];
 }
 
 export interface Payload {
-  userId: string;
-  username: string;
-  roles: string[];
+    userId: string;
+    username: string;
+    roles: string[];
 }

@@ -9,32 +9,32 @@ import { AwsService } from '../aws.service';
  */
 @Injectable()
 export class Ec2Service {
-  private instance: EC2 = new EC2(this.aws.options);
+    private instance: EC2 = new EC2(this.aws.options);
 
-  constructor(private aws: AwsService) {}
+    constructor(private aws: AwsService) {}
 
-  public async describeInstances(): Promise<DescribeInstancesResult> {
-    return this.instance
-      .describeInstances({
-        Filters: [{ Name: 'tag:Name', Values: ['livestream camemis'] }],
-      })
-      .promise();
-  }
+    public async describeInstances(): Promise<DescribeInstancesResult> {
+        return this.instance
+            .describeInstances({
+                Filters: [{ Name: 'tag:Name', Values: ['livestream camemis'] }],
+            })
+            .promise();
+    }
 
-  public async describeInstanceAttribute(instanceId: string, attribute: InstanceAttributeName = 'userData'): Promise<InstanceAttribute> {
-    return this.instance
-      .describeInstanceAttribute({
-        InstanceId: instanceId,
-        Attribute: attribute,
-      })
-      .promise();
-  }
+    public async describeInstanceAttribute(instanceId: string, attribute: InstanceAttributeName = 'userData'): Promise<InstanceAttribute> {
+        return this.instance
+            .describeInstanceAttribute({
+                InstanceId: instanceId,
+                Attribute: attribute,
+            })
+            .promise();
+    }
 
-  public async describeInstanceStatus(instanceIds: string[]): Promise<DescribeInstanceStatusResult> {
-    return this.instance
-      .describeInstanceStatus({
-        InstanceIds: instanceIds,
-      })
-      .promise();
-  }
+    public async describeInstanceStatus(instanceIds: string[]): Promise<DescribeInstanceStatusResult> {
+        return this.instance
+            .describeInstanceStatus({
+                InstanceIds: instanceIds,
+            })
+            .promise();
+    }
 }

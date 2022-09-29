@@ -6,7 +6,7 @@ import { AuthModule } from '../auth';
 import * as controllers from './controllers';
 
 @Module({
-  imports: [TerminusModule, AuthModule, HttpModule], // Authentication
-  controllers: Object.values(controllers),
+    imports: [TerminusModule, AuthModule, HttpModule], // Authentication
+    controllers: Object.values(controllers),
 })
 export class BaseModule {}

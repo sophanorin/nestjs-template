@@ -7,13 +7,13 @@ import type { ConfigurationOptions } from 'aws-sdk/lib/config-base';
  */
 @Injectable()
 export class AwsService {
-  public options: ConfigurationOptions;
+    public options: ConfigurationOptions;
 
-  constructor(public config: ConfigService) {
-    this.options = {
-      accessKeyId: config.get('aws.access_key_id'),
-      secretAccessKey: config.get('aws.secret_access_key'),
-      region: config.get('aws.region'),
-    };
-  }
+    constructor(public config: ConfigService) {
+        this.options = {
+            accessKeyId: config.get('aws.access_key_id'),
+            secretAccessKey: config.get('aws.secret_access_key'),
+            region: config.get('aws.region'),
+        };
+    }
 }

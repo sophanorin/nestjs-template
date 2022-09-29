@@ -6,12 +6,12 @@ import { User } from '../../entity/user';
 
 @Injectable()
 export class FoobarService {
-  constructor(
-    @InjectRepository(User)
-    private user_table: Repository<User>,
-  ) {}
+    constructor(
+        @InjectRepository(User)
+        private userTable: Repository<User>,
+    ) {}
 
-  public async getFoobars(): Promise<User[]> {
-    return this.user_table.find({ take: 10 });
-  }
+    public async getFoobars(): Promise<User[]> {
+        return this.userTable.find({ take: 10 });
+    }
 }

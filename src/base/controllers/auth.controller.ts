@@ -9,45 +9,45 @@ import { ReqUser, Logger } from '../../common';
  */
 @Controller()
 export class AuthController {
-  constructor(private auth: AuthService, private readonly logger: Logger) {}
+    constructor(private auth: AuthService, private readonly logger: Logger) {}
 
-  /**
-   * See test/e2e/local-auth.spec.ts
-   * need username, password in body
-   * skip guard to @Public when using global guard
-   */
-  @Post('login')
-  @UseGuards(LocalLoginGuard)
-  public login(@Req() req: Request): Payload | undefined {
-    return req.user;
-  }
+    /**
+     * See test/e2e/local-auth.spec.ts
+     * need username, password in body
+     * skip guard to @Public when using global guard
+     */
+    @Post('login')
+    @UseGuards(LocalLoginGuard)
+    public login(@Req() req: Request): Payload | undefined {
+        return req.user;
+    }
 
-  @Get('logout')
-  public logout(@Req() req: Request, @Res() res: Response): void {
-    req.logout((err: any): void => {
-      this.logger.error(err);
-    });
-    res.redirect('/');
-  }
+    @Get('logout')
+    public logout(@Req() req: Request, @Res() res: Response): void {
+        req.logout((err: any): void => {
+            this.logger.error(err);
+        });
+        res.redirect('/');
+    }
 
-  @Get('check')
-  @UseGuards(AuthenticatedGuard)
-  public check(@ReqUser() user: Payload): Payload | undefined {
-    return user;
-  }
+    @Get('check')
+    @UseGuards(AuthenticatedGuard)
+    public check(@ReqUser() user: Payload): Payload | undefined {
+        return user;
+    }
 
-  /**
-   * See test/e2e/jwt-auth.spec.ts
-   */
-  @UseGuards(LocalAuthGuard)
-  @Post('jwt/login')
-  public jwtLogin(@Req() req: Request): { access_token: string } {
-    return this.auth.signJwt(<Payload>req.user);
-  }
+    /**
+     * See test/e2e/jwt-auth.spec.ts
+     */
+    @UseGuards(LocalAuthGuard)
+    @Post('jwt/login')
+    public jwtLogin(@Req() req: Request): { access_token: string } {
+        return this.auth.signJwt(<Payload>req.user);
+    }
 
-  @UseGuards(JwtAuthGuard)
-  @Get('jwt/check')
-  public jwtCheck(@ReqUser() user: Payload): Payload | undefined {
-    return user;
-  }
+    @UseGuards(JwtAuthGuard)
+    @Get('jwt/check')
+    public jwtCheck(@ReqUser() user: Payload): Payload | undefined {
+        return user;
+    }
 }

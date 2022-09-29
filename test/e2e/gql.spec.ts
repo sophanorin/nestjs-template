@@ -13,122 +13,137 @@ let request: SuperTest<AgentTest>;
 let idx: number;
 
 beforeAll(async () => {
-  const moduleRef = await Test.createTestingModule({
-    imports: [AppModule],
-  }).compile();
+    const moduleRef = await Test.createTestingModule({
+        imports: [AppModule],
+    }).compile();
 
-  app = moduleRef.createNestApplication();
-  await app.init();
+    app = moduleRef.createNestApplication();
+    await app.init();
 
-  request = supertest(app.getHttpServer());
+    request = supertest(app.getHttpServer());
 });
 
 test('User', async () => {
-  const { status, body: login } = await request.post('/jwt/login')
-    .send({ username: 'foobar', password: 'crypto' });
+    const { status, body: login } = await request.post('/jwt/login').send({ username: 'foobar', password: 'crypto' });
 
-  expect([200, 201]).toContain(status);
-  expect(login).toHaveProperty('access_token');
+    expect([200, 201]).toContain(status);
+    expect(login).toHaveProperty('access_token');
 
-  const { body } = await request.post('/graphql')
-    .set('Authorization', `Bearer ${login.access_token}`)
-    .send({ query: gql`
-      query Payload {
-        user {
-          username
-        }
-      }`,
-    }).expect(200);
+    const { body } = await request
+        .post('/graphql')
+        .set('Authorization', `Bearer ${login.access_token}`)
+        .send({
+            query: gql`
+                query Payload {
+                    user {
+                        username
+                    }
+                }
+            `,
+        })
+        .expect(200);
 
-  expect(body).toHaveProperty('data.user.username', 'foobar');
+    expect(body).toHaveProperty('data.user.username', 'foobar');
 });
 
 test('Write', async () => {
-  const { body } = await request.post('/graphql').send({
-    query: gql`
-      mutation Write($data: SimpleInput!) {
-        create(simpleData: $data) {
-          id
-          title
-          content
-          tags
-        }
-      }
-    `,
-    variables: {
-      data: {
-        title: 'foo',
-        content: 'bar',
-        tags: 'test',
-      },
-    },
-  }).expect(200);
+    const { body } = await request
+        .post('/graphql')
+        .send({
+            query: gql`
+                mutation Write($data: SimpleInput!) {
+                    create(simpleData: $data) {
+                        id
+                        title
+                        content
+                        tags
+                    }
+                }
+            `,
+            variables: {
+                data: {
+                    title: 'foo',
+                    content: 'bar',
+                    tags: 'test',
+                },
+            },
+        })
+        .expect(200);
 
-  expect(body).toHaveProperty('data.create.id');
+    expect(body).toHaveProperty('data.create.id');
 
-  idx = body.data.create.id;
+    idx = body.data.create.id;
 });
 
 test('Read', async () => {
-  const { body } = await request.post('/graphql').send({
-    query: gql`
-      query Read($id: ID!) {
-        read(id: $id) {
-          title
-          createdAt
-        }
-      }
-    `,
-    variables: {
-      id: idx,
-    },
-  }).expect(200);
+    const { body } = await request
+        .post('/graphql')
+        .send({
+            query: gql`
+                query Read($id: ID!) {
+                    read(id: $id) {
+                        title
+                        createdAt
+                    }
+                }
+            `,
+            variables: {
+                id: idx,
+            },
+        })
+        .expect(200);
 
-  expect(body).toHaveProperty('data.read.title', 'foo');
+    expect(body).toHaveProperty('data.read.title', 'foo');
 });
 
 test('Find', async () => {
-  const { body } = await request.post('/graphql').send({
-    query: gql`
-      query Find($title: String!, $content: String) {
-        find(title: $title, content: $content) {
-          id
-          title
-          content
-          tags
-          createdAt
-        }
-      }
-    `,
-    variables: {
-      title: 'foo',
-    },
-  }).expect(200);
+    const { body } = await request
+        .post('/graphql')
+        .send({
+            query: gql`
+                query Find($title: String!, $content: String) {
+                    find(title: $title, content: $content) {
+                        id
+                        title
+                        content
+                        tags
+                        createdAt
+                    }
+                }
+            `,
+            variables: {
+                title: 'foo',
+            },
+        })
+        .expect(200);
 
-  expect(body).toHaveProperty('data.find');
-  expect(body.data.find).toContainEqual(
-    expect.objectContaining({
-      title: expect.any(String),
-      createdAt: expect.any(Number),
-    }),
-  );
+    expect(body).toHaveProperty('data.find');
+    expect(body.data.find).toContainEqual(
+        expect.objectContaining({
+            title: expect.any(String),
+            createdAt: expect.any(Number),
+        }),
+    );
 });
 
 test('Remove', async () => {
-  const { body } = await request.post('/graphql').send({
-    query: gql`
-      mutation Remove($id: ID!) {
-        remove(id: $id)
-      }
-    `,
-    variables: {
-      id: idx,
-    },
-  }).expect(200);
+    const { body } = await request
+        .post('/graphql')
+        .send({
+            query: gql`
+                mutation Remove($id: ID!) {
+                    remove(id: $id)
+                }
+            `,
+            variables: {
+                id: idx,
+            },
+        })
+        .expect(200);
 
-  expect(body).toHaveProperty('data.remove', true);
+    expect(body).toHaveProperty('data.remove', true);
 });
 
 afterAll(async () => {
-  await app?.close();
+    await app?.close();
 });

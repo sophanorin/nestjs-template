@@ -1,22 +1,22 @@
 export const config = {
-  aws: {
-    access_key_id: 'access_key_id',
-    secret_access_key: 'secret_access_key',
-    region: 'ap-southeast-1',
-  },
-  graphql: {
-    debug: true,
-    playground: {
-      settings: {
-        'request.credentials': 'include',
-      },
+    aws: {
+        access_key_id: 'access_key_id',
+        secret_access_key: 'secret_access_key',
+        region: 'ap-southeast-1',
     },
-    autoSchemaFile: true,
-    autoTransformHttpErrors: true,
-    // cors: { credentials: true },
-    // sortSchema: true,
-    // installSubscriptionHandlers: true,
-  },
-  hello: 'world',
-  jwtSecret: process.env.JWT_SECRET,
+    graphql: {
+        debug: true,
+        playground: {
+            settings: {
+                'request.credentials': 'include',
+            },
+        },
+        autoSchemaFile: true,
+        autoTransformHttpErrors: true,
+        // cors: { credentials: true },
+        // sortSchema: true,
+        // installSubscriptionHandlers: true,
+    },
+    hello: 'world',
+    jwtSecret: process.env.JWT_SECRET,
 };

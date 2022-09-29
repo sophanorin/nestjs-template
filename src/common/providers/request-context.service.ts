@@ -7,5 +7,5 @@ import type { Request } from 'express';
  */
 @Injectable({ scope: Scope.REQUEST })
 export class RequestContext {
-  constructor(@Inject(REQUEST) public context: Request) {}
+    constructor(@Inject(REQUEST) public context: Request) {}
 }

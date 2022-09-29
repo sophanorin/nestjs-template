@@ -4,26 +4,26 @@ import type { Request } from 'express';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
-  constructor(private reflector: Reflector) {}
+    constructor(private reflector: Reflector) {}
 
-  public canActivate(context: ExecutionContext): boolean {
-    const roles = this.reflector.getAllAndOverride<string[]>('roles', [
-      context.getHandler(), // Method Roles
-      context.getClass(), // Controller Roles
-    ]);
+    public canActivate(context: ExecutionContext): boolean {
+        const roles = this.reflector.getAllAndOverride<string[]>('roles', [
+            context.getHandler(), // Method Roles
+            context.getClass(), // Controller Roles
+        ]);
 
-    if (!roles) {
-      return true;
+        if (!roles) {
+            return true;
+        }
+
+        const request: Request = context.switchToHttp().getRequest<Request>();
+
+        const { user } = request;
+
+        if (!user) {
+            return false;
+        }
+
+        return user.roles.some((role: string) => roles.includes(role));
     }
-
-    const request: Request = context.switchToHttp().getRequest<Request>();
-
-    const { user } = request;
-
-    if (!user) {
-      return false;
-    }
-
-    return user.roles.some((role: string) => roles.includes(role));
-  }
 }
