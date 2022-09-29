@@ -12,32 +12,32 @@ import { CommonModule, ExceptionsFilter, LoggerMiddleware } from './common';
 import { configuration } from './config';
 
 @Module({
-    imports: [
+    imports : [
         // Configuration
         // https://docs.nestjs.com/techniques/configuration
         ConfigModule.forRoot({
-            isGlobal: true,
-            load: [configuration],
+            isGlobal : true,
+            load     : [configuration],
         }),
         // Database
         // https://docs.nestjs.com/techniques/database
         TypeOrmModule.forRootAsync({
-            useFactory: (config: ConfigService): Promise<TypeOrmModuleOptions> | TypeOrmModuleOptions => ({
+            useFactory : (config: ConfigService): Promise<TypeOrmModuleOptions> | TypeOrmModuleOptions => ({
                 // eslint-disable-next-line @typescript-eslint/no-misused-promises
                 ...config.get('db'),
             }),
-            inject: [ConfigService],
+            inject : [ConfigService],
         }),
         // Static Folder
         // https://docs.nestjs.com/recipes/serve-static
         // https://docs.nestjs.com/techniques/mvc
         ServeStaticModule.forRoot({
-            rootPath: `${__dirname}/../public`,
-            renderPath: '/',
+            rootPath   : `${__dirname}/../public`,
+            renderPath : '/',
         }),
         MulterModule.registerAsync({
-            useFactory: () => ({
-                dest: './upload',
+            useFactory : () => ({
+                dest : './upload',
             }),
         }),
         // Service Modules
@@ -49,21 +49,21 @@ import { configuration } from './config';
         // https://docs.nestjs.com/recipes/router-module
         RouterModule.register([
             {
-                path: 'aws',
-                module: AwsModule,
+                path   : 'aws',
+                module : AwsModule,
             },
             {
-                path: 'api/v1',
-                children: [
+                path     : 'api/v1',
+                children : [
                     ...Object.values(ApiModules).map((module: any) => ({
-                        path: '/',
+                        path : '/',
                         module,
                     })),
                 ],
             },
         ]),
     ],
-    providers: [
+    providers : [
         // Global Guard, Authentication check on all routers
         // { provide: APP_GUARD, useClass: AuthenticatedGuard },
         // Global Filter, Exception check
