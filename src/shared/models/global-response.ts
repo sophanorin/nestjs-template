@@ -11,7 +11,7 @@ export const GlobalResponseError: (statusCode: number, message: string, code: st
     statusCode,
     message,
     code,
-    timestamp: new Date().toISOString(),
-    path: request.url,
-    method: request.method,
+    timestamp : new Date().toISOString(),
+    path      : request.url,
+    method    : request.method,
 });

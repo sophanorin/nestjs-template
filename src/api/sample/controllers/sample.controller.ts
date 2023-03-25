@@ -29,15 +29,15 @@ export class SampleController {
         this.logger.log('this is sample');
 
         return {
-            hello: this.config.get('hello'),
-            foo: this.config.get('foo'),
+            hello : this.config.get('hello'),
+            foo   : this.config.get('foo'),
         };
     }
 
     @Get('hello') // http://localhost:3000/test/sample/hello
     public hello(@Req() req: Request, @Res() res: Response): void {
         res.json({
-            message: req.originalUrl,
+            message : req.originalUrl,
         });
     }
 

@@ -15,10 +15,10 @@ export function middleware(app: INestApplication): INestApplication {
     app.use(
         session({
             // Requires 'store' setup for production
-            secret: cookieSecret,
-            resave: false,
-            saveUninitialized: true,
-            cookie: { secure: isProduction },
+            secret            : cookieSecret,
+            resave            : false,
+            saveUninitialized : true,
+            cookie            : { secure: isProduction },
         }),
     );
     app.use(passport.initialize());

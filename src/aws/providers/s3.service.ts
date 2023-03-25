@@ -26,10 +26,10 @@ export class S3Service {
 
     public async uploadS3(file: Buffer, bucket: string, name: string): Promise<any> {
         const params: PutObjectRequest = {
-            ACL: 'public-read',
-            Bucket: bucket,
-            Key: String(name),
-            Body: file,
+            ACL    : 'public-read',
+            Bucket : bucket,
+            Key    : String(name),
+            Body   : file,
         };
         return new Promise((resolve: (v: unknown) => void, reject: (r: any) => void) => {
             this.s3.upload(params, (err: { message: any }, data: unknown) => {

@@ -12,10 +12,10 @@ export class BodyFilter implements ExceptionFilter {
 
         // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         return response.status(status).json({
-            statusCode: status,
-            success: false,
-            message: responseException.message,
-            error: exception.validationErrors,
+            statusCode : status,
+            success    : false,
+            message    : responseException.message,
+            error      : exception.validationErrors,
         });
     }
 }

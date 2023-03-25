@@ -1,10 +1,9 @@
-import { ArgumentMetadata, Injectable, PipeTransform, BadRequestException } from '@nestjs/common';
+import { Injectable, PipeTransform, BadRequestException } from '@nestjs/common';
 
 @Injectable()
 export class ParseFile implements PipeTransform {
     public transform(
         files: Express.Multer.File | Express.Multer.File[],
-        _metadata: ArgumentMetadata,
     ): Express.Multer.File | Express.Multer.File[] {
         if (files === undefined || files === null) {
             throw new BadRequestException('Validation failed (Reason: Missing file fields)');

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/consistent-type-assertions */
 import type { Config, Objectype, Production } from './config.interface';
 
 const util = {
@@ -19,7 +20,7 @@ const util = {
 
 export const configuration = async (): Promise<Config> => {
     const { config } = await import('./envs/default');
-    const { config: environment } = <{ config: Production }>await import(`./envs/${process.env.NODE_ENV || 'development'}`);
+    const { config: environment } = <{ config: Production }> await import(`./envs/${process.env.NODE_ENV || 'development'}`);
 
     // object deep merge
     return util.merge(config, environment);

@@ -14,7 +14,7 @@ let idx: number;
 
 beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
-        imports: [AppModule],
+        imports : [AppModule],
     }).compile();
 
     app = moduleRef.createNestApplication();
@@ -33,7 +33,7 @@ test('User', async () => {
         .post('/graphql')
         .set('Authorization', `Bearer ${login.access_token}`)
         .send({
-            query: gql`
+            query : gql`
                 query Payload {
                     user {
                         username
@@ -50,7 +50,7 @@ test('Write', async () => {
     const { body } = await request
         .post('/graphql')
         .send({
-            query: gql`
+            query : gql`
                 mutation Write($data: SimpleInput!) {
                     create(simpleData: $data) {
                         id
@@ -60,11 +60,11 @@ test('Write', async () => {
                     }
                 }
             `,
-            variables: {
-                data: {
-                    title: 'foo',
-                    content: 'bar',
-                    tags: 'test',
+            variables : {
+                data : {
+                    title   : 'foo',
+                    content : 'bar',
+                    tags    : 'test',
                 },
             },
         })
@@ -79,7 +79,7 @@ test('Read', async () => {
     const { body } = await request
         .post('/graphql')
         .send({
-            query: gql`
+            query : gql`
                 query Read($id: ID!) {
                     read(id: $id) {
                         title
@@ -87,8 +87,8 @@ test('Read', async () => {
                     }
                 }
             `,
-            variables: {
-                id: idx,
+            variables : {
+                id : idx,
             },
         })
         .expect(200);
@@ -100,7 +100,7 @@ test('Find', async () => {
     const { body } = await request
         .post('/graphql')
         .send({
-            query: gql`
+            query : gql`
                 query Find($title: String!, $content: String) {
                     find(title: $title, content: $content) {
                         id
@@ -111,8 +111,8 @@ test('Find', async () => {
                     }
                 }
             `,
-            variables: {
-                title: 'foo',
+            variables : {
+                title : 'foo',
             },
         })
         .expect(200);
@@ -120,8 +120,8 @@ test('Find', async () => {
     expect(body).toHaveProperty('data.find');
     expect(body.data.find).toContainEqual(
         expect.objectContaining({
-            title: expect.any(String),
-            createdAt: expect.any(Number),
+            title     : expect.any(String),
+            createdAt : expect.any(Number),
         }),
     );
 });
@@ -130,13 +130,13 @@ test('Remove', async () => {
     const { body } = await request
         .post('/graphql')
         .send({
-            query: gql`
+            query : gql`
                 mutation Remove($id: ID!) {
                     remove(id: $id)
                 }
             `,
-            variables: {
-                id: idx,
+            variables : {
+                id : idx,
             },
         })
         .expect(200);

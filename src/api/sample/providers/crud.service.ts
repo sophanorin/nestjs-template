@@ -17,7 +17,7 @@ export class CrudService {
 
     public async read(id: number): Promise<User | null> {
         return this.table.findOne({
-            where: {
+            where : {
                 id,
             },
         });

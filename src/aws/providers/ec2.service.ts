@@ -16,7 +16,7 @@ export class Ec2Service {
     public async describeInstances(): Promise<DescribeInstancesResult> {
         return this.instance
             .describeInstances({
-                Filters: [{ Name: 'tag:Name', Values: ['livestream camemis'] }],
+                Filters : [{ Name: 'tag:Name', Values: ['livestream camemis'] }],
             })
             .promise();
     }
@@ -24,8 +24,8 @@ export class Ec2Service {
     public async describeInstanceAttribute(instanceId: string, attribute: InstanceAttributeName = 'userData'): Promise<InstanceAttribute> {
         return this.instance
             .describeInstanceAttribute({
-                InstanceId: instanceId,
-                Attribute: attribute,
+                InstanceId : instanceId,
+                Attribute  : attribute,
             })
             .promise();
     }
@@ -33,7 +33,7 @@ export class Ec2Service {
     public async describeInstanceStatus(instanceIds: string[]): Promise<DescribeInstanceStatusResult> {
         return this.instance
             .describeInstanceStatus({
-                InstanceIds: instanceIds,
+                InstanceIds : instanceIds,
             })
             .promise();
     }

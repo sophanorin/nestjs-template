@@ -10,8 +10,8 @@ import { RequestContext } from './request-context.service';
 export class Logger extends ConsoleLogger {
     protected isProduction: boolean = process.env.NODE_ENV === 'production';
     protected override options: ConsoleLoggerOptions = {
-        logLevels: ['log', 'error', 'warn', 'debug', 'verbose'],
-        timestamp: !this.isProduction,
+        logLevels : ['log', 'error', 'warn', 'debug', 'verbose'],
+        timestamp : !this.isProduction,
     };
 
     constructor(private req: RequestContext, context: string) {

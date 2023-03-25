@@ -16,7 +16,7 @@ import { BodyException } from './shared';
 async function bootstrap(): Promise<string> {
     const isProduction = process.env.NODE_ENV === 'production';
     const app = await NestFactory.create<NestExpressApplication>(AppModule, {
-        bufferLogs: true,
+        bufferLogs : true,
     });
 
     app.useLogger(await app.resolve(Logger));
@@ -26,9 +26,9 @@ async function bootstrap(): Promise<string> {
 
     app.useGlobalPipes(
         new ValidationPipe({
-            transform: true, // transform object to DTO class
-            disableErrorMessages: false,
-            exceptionFactory: (errors: ValidationError[]): BodyException => {
+            transform            : true, // transform object to DTO class
+            disableErrorMessages : false,
+            exceptionFactory     : (errors: ValidationError[]): BodyException => {
                 const errMsg: Record<string, any> = {};
                 errors.forEach((err: ValidationError) => {
                     if (err.constraints) {

@@ -10,7 +10,7 @@ let request: SuperTest<AgentTest>;
 
 beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
-        imports: [AppModule],
+        imports : [AppModule],
     }).compile();
 
     app = moduleRef.createNestApplication();

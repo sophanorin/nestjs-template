@@ -9,9 +9,9 @@ import type { JwtPayload, Payload } from '../auth.interface';
 export class JwtStrategy extends PassportStrategy(Strategy) {
     constructor(config: ConfigService) {
         super({
-            jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-            ignoreExpiration: false,
-            secretOrKey: config.get('jwtSecret'),
+            jwtFromRequest   : ExtractJwt.fromAuthHeaderAsBearerToken(),
+            ignoreExpiration : false,
+            secretOrKey      : config.get('jwtSecret'),
         });
     }
 

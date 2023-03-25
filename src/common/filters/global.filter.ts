@@ -9,10 +9,14 @@ import {
     ForbiddenException,
     BadRequestException,
     UnauthorizedException,
+    InternalServerErrorException,
+    UnprocessableEntityException,
+    PayloadTooLargeException,
+    BadGatewayException,
 } from '@nestjs/common';
 import type { Request, Response } from 'express';
 import { GlobalResponseError } from 'src/shared';
-import { QueryFailedError, EntityNotFoundError, CannotCreateEntityIdMapError } from 'typeorm';
+import { QueryFailedError, EntityNotFoundError, CannotCreateEntityIdMapError, TypeORMError } from 'typeorm';
 
 @Catch()
 export class GlobalExceptionFilter implements ExceptionFilter {
@@ -44,36 +48,80 @@ export class GlobalExceptionFilter implements ExceptionFilter {
                 break;
             }
             case BadRequestException: {
-                const badRequestRxception = exception as BadRequestException;
-                status = badRequestRxception.getStatus();
-                message = badRequestRxception.message;
-                code = badRequestRxception.name;
+                const badRequestException = exception as BadRequestException;
+                status = badRequestException.getStatus();
+                message = badRequestException.message;
+                code = badRequestException.name;
+                break;
+            }
+            case UnprocessableEntityException: {
+                const unprocessableException = exception as UnprocessableEntityException;
+                status = unprocessableException.getStatus();
+                message = unprocessableException.message;
+                code = unprocessableException.name;
                 break;
             }
             case HttpException: {
                 const httpException = exception as HttpException;
                 status = httpException.getStatus();
                 message = httpException.message;
+                code = httpException.name;
+                break;
+            }
+            case BadGatewayException: {
+                const badGatewayException = exception as BadGatewayException;
+                status = badGatewayException.getStatus();
+                message = badGatewayException.message;
+                code = badGatewayException.name;
+                break;
+            }
+            case PayloadTooLargeException: {
+                const payloadTooLargeException = exception as PayloadTooLargeException;
+                status = payloadTooLargeException.getStatus();
+                message = payloadTooLargeException.message;
+                code = payloadTooLargeException.name;
+                break;
+            }
+            case InternalServerErrorException: {
+                const httpException = exception as InternalServerErrorException;
+                status = httpException.getStatus();
+                message = httpException.message;
+                code = httpException.name;
                 break;
             }
             case QueryFailedError: {
                 // this is a TypeOrm error
                 status = HttpStatus.UNPROCESSABLE_ENTITY;
-                message = (exception as QueryFailedError).message;
+                message = 'Could not loads related objects! checks your related object ID you just provided.';
+                code = exception.code;
+                break;
+            }
+            case TypeError: {
+                // this is a TypeOrm error
+
+                const typeException = exception as TypeError;
+
+                status = HttpStatus.BAD_REQUEST;
+                message = typeException.message;
                 code = exception.code;
                 break;
             }
             case EntityNotFoundError: {
                 // this is another TypeOrm error
-                status = HttpStatus.UNPROCESSABLE_ENTITY;
-                message = (exception as EntityNotFoundError).message;
+
+                // const notFound = <EntityNotFoundError>exception;
+                // message = notFound.message;
+                status = HttpStatus.NOT_FOUND;
+                message = 'Could not find matching object! checks your object ID you just provided.';
                 code = exception.code;
                 break;
             }
             case CannotCreateEntityIdMapError: {
                 // and another
+                const typeormException = exception as CannotCreateEntityIdMapError;
+
                 status = HttpStatus.UNPROCESSABLE_ENTITY;
-                message = (exception as CannotCreateEntityIdMapError).message;
+                message = typeormException.message;
                 code = exception.code;
                 break;
             }
@@ -82,6 +130,13 @@ export class GlobalExceptionFilter implements ExceptionFilter {
                 status = unauthorizedException.getStatus();
                 message = unauthorizedException.message;
                 code = unauthorizedException.name;
+                break;
+            }
+            case TypeORMError: {
+                const typeOrmError = exception as TypeORMError;
+                status = HttpStatus.BAD_REQUEST;
+                message = typeOrmError.message;
+                code = typeOrmError.name;
                 break;
             }
             default:

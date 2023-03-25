@@ -16,15 +16,15 @@ export function ApiFile(
         UseInterceptors(FilesInterceptor(fieldName, maxCount, localOptions)),
         ApiConsumes('multipart/form-data'),
         ApiBody({
-            schema: {
-                type: 'object',
-                required: required ? [fieldName] : [],
-                properties: {
-                    [fieldName]: {
-                        type: 'array',
-                        items: {
-                            type: 'string',
-                            format: 'binary',
+            schema : {
+                type       : 'object',
+                required   : required ? [fieldName] : [],
+                properties : {
+                    [fieldName] : {
+                        type  : 'array',
+                        items : {
+                            type   : 'string',
+                            format : 'binary',
                         },
                     },
                 },
@@ -35,12 +35,12 @@ export function ApiFile(
 
 export function ApiImageFile(fileName: string = 'image', required: boolean = false): ReturnType<typeof ApiFile> {
     return ApiFile(fileName, required, 10, {
-        fileFilter: fileMimetypeFilter('image'),
+        fileFilter : fileMimetypeFilter('image'),
     });
 }
 
 export function ApiPdfFile(fileName: string = 'document', required: boolean = false): ReturnType<typeof ApiFile> {
     return ApiFile(fileName, required, 10, {
-        fileFilter: fileMimetypeFilter('pdf'),
+        fileFilter : fileMimetypeFilter('pdf'),
     });
 }

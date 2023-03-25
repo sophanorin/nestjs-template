@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Module } from '@nestjs/common';
 import { RouterModule } from '@nestjs/core';
 import * as ApiModules from 'src/api';
@@ -28,4 +29,4 @@ import { BaseModule } from 'src/base';
         ]),
     ],
 })
-export class RouteModule { }
+export class RouteModule {}

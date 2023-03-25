@@ -13,10 +13,10 @@ export function ApiFileFields(uploadFields: UploadFields[], localOptions?: Multe
         ...uploadFields.map((field: UploadFields) => ({ [field.name]: { type: 'string', format: 'binary' } })),
     );
     const apiBody = ApiBody({
-        schema: {
-            type: 'object',
-            properties: bodyProperties,
-            required: uploadFields.filter((f: UploadFields) => f.required).map((f: UploadFields) => f.name),
+        schema : {
+            type       : 'object',
+            properties : bodyProperties,
+            required   : uploadFields.filter((f: UploadFields) => f.required).map((f: UploadFields) => f.name),
         },
     });
 

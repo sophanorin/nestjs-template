@@ -18,8 +18,8 @@
     ],
     "ignorePatterns": ["**/node_modules/**", "dist/**", "src/entity/**"],
     "rules": {
-        "indent": [2, 4],
-        "@typescript-eslint/indent": ["error", 4],
+        "indent": "off",
+        "@typescript-eslint/indent": [2,4],
         "key-spacing": [
             2,
             {
@@ -34,6 +34,7 @@
                 }
             }
         ],
+        "@typescript-eslint/no-explicit-any": "off",
         "no-multi-spaces": "off",
         "class-methods-use-this": "off",
         // https://github.com/typescript-eslint/typescript-eslint/issues/1277
