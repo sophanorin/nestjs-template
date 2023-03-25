@@ -9,26 +9,35 @@
     "incremental": true,
     "declaration": true,
     "newLine": "lf",
-    "strict": true, //= alwaysStrict, strictNullChecks, strictBindCallApply, strictFunctionTypes, strictPropertyInitialization, noImplicitAny, noImplicitThis, useUnknownInCatchVariables
-    "allowUnreachableCode": false,
-    "allowUnusedLabels": false,
-    // "exactOptionalPropertyTypes": true,
-    "importsNotUsedAsValues": "error",
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitOverride": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
     "noImplicitReturns": true,
-    "noPropertyAccessFromIndexSignature": true,
-    // "noUncheckedIndexedAccess": true,
+    "strictNullChecks": true,
+    "strictBindCallApply": true,
+    "strictFunctionTypes": true,
+    "strictPropertyInitialization": true,
+    "exactOptionalPropertyTypes": true,
+    "noFallthroughCasesInSwitch": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+    "noPropertyAccessFromIndexSignature": true,
     "removeComments": true,
     "sourceMap": true,
     "forceConsistentCasingInFileNames": true,
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true, // https://github.com/Microsoft/TypeScript/issues/2577
+    "emitDecoratorMetadata": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
+    "noImplicitOverride": true,
+    "noUncheckedIndexedAccess": true
   },
-  "include": ["typings/global.d.ts", "src/**/*", "test/**/*"],
-  "exclude": ["node_modules"]
+  "include": [
+    "typings/global.d.ts",
+    "src/**/*",
+    "test/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

@@ -1,15 +1,12 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { APP_FILTER, RouterModule } from '@nestjs/core';
+import { APP_FILTER } from '@nestjs/core';
 import { MulterModule } from '@nestjs/platform-express';
 import { ServeStaticModule } from '@nestjs/serve-static';
-import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
-
-import * as ApiModules from './api';
-import { AwsModule } from './aws';
-import { BaseModule } from './base';
-import { CommonModule, ExceptionsFilter, LoggerMiddleware } from './common';
-import { configuration } from './config';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { CommonModule, ExceptionsFilter, LoggerMiddleware } from 'src/common';
+import { configuration, getMulterModuleOptions, getServerStaticModuleOptions, getTypeOrmModuleOptions } from 'src/config';
+import { RouteModule } from 'src/routes';
 
 @Module({
     imports : [
@@ -22,46 +19,20 @@ import { configuration } from './config';
         // Database
         // https://docs.nestjs.com/techniques/database
         TypeOrmModule.forRootAsync({
-            useFactory : (config: ConfigService): Promise<TypeOrmModuleOptions> | TypeOrmModuleOptions => ({
-                // eslint-disable-next-line @typescript-eslint/no-misused-promises
-                ...config.get('db'),
-            }),
-            inject : [ConfigService],
+            useFactory : getTypeOrmModuleOptions,
+            inject     : [ConfigService],
         }),
         // Static Folder
         // https://docs.nestjs.com/recipes/serve-static
         // https://docs.nestjs.com/techniques/mvc
-        ServeStaticModule.forRoot({
-            rootPath   : `${__dirname}/../public`,
-            renderPath : '/',
-        }),
+        ServeStaticModule.forRoot(getServerStaticModuleOptions()),
         MulterModule.registerAsync({
-            useFactory : () => ({
-                dest : './upload',
-            }),
+            useFactory : getMulterModuleOptions,
         }),
         // Service Modules
         CommonModule, // Global
-        BaseModule,
-        AwsModule,
-        ...Object.values(ApiModules),
-        // Module Router
-        // https://docs.nestjs.com/recipes/router-module
-        RouterModule.register([
-            {
-                path   : 'aws',
-                module : AwsModule,
-            },
-            {
-                path     : 'api/v1',
-                children : [
-                    ...Object.values(ApiModules).map((module: any) => ({
-                        path : '/',
-                        module,
-                    })),
-                ],
-            },
-        ]),
+        // Route modules
+        RouteModule,
     ],
     providers : [
         // Global Guard, Authentication check on all routers

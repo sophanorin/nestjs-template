@@ -1,6 +1,5 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import type { Request, Response } from 'express';
-import { nanoid } from 'nanoid';
 
 import { Logger } from '../providers';
 
@@ -19,7 +18,7 @@ export class LoggerMiddleware implements NestMiddleware {
             return next();
         }
 
-        req.id = req.header('X-Request-Id') || nanoid();
+        req.id = req.header('X-Request-Id') || crypto.randomUUID();
         res.setHeader('X-Request-Id', req.id);
 
         const user = req.user?.userId || '';

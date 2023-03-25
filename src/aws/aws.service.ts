@@ -11,9 +11,9 @@ export class AwsService {
 
     constructor(public config: ConfigService) {
         this.options = {
-            accessKeyId: config.get('aws.access_key_id'),
-            secretAccessKey: config.get('aws.secret_access_key'),
-            region: config.get('aws.region'),
+            accessKeyId     : config.get('aws.access_key_id') || '',
+            secretAccessKey : config.get('aws.secret_access_key') || '',
+            region          : config.get('aws.region') || '',
         };
     }
 }
