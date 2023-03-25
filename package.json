@@ -19,10 +19,10 @@
     "prepare": "husky install"
   },
   "lint-staged": {
-    "src/**/*.{html,js,jsx}": [
+    "src/**/*.{html,ts}": [
       "prettier --write"
     ],
-    "src/**/*.{js,jsx}": [
+    "src/**/*.{js,ts}": [
       "eslint --fix"
     ]
   },
