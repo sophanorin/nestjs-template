@@ -6,8 +6,9 @@
         "project": "tsconfig.json",
         "sourceType": "module"
     },
-    "plugins": ["@typescript-eslint", "sonarjs", "jest"],
+    "plugins": ["@typescript-eslint", "prettier", "sonarjs", "jest"],
     "extends": [
+        "prettier",
         "eslint:recommended",
         "airbnb-base",
         "airbnb-typescript/base",
@@ -34,13 +35,12 @@
                 }
             }
         ],
-        "@typescript-eslint/no-explicit-any": "off",
         "no-multi-spaces": "off",
         "class-methods-use-this": "off",
         // https://github.com/typescript-eslint/typescript-eslint/issues/1277
         "consistent-return": "off",
         "func-names": "off",
-        "max-len": ["error", { "code": 140, "ignoreTemplateLiterals": true }],
+        "max-len": ["error", { "code": 240, "ignoreTemplateLiterals": true }],
         "newline-per-chained-call": "off",
         "no-await-in-loop": "off",
         "no-continue": "off",
@@ -77,11 +77,10 @@
             }
         ],
         "import/prefer-default-export": "off",
-
         "@typescript-eslint/consistent-indexed-object-style": "error",
-        "@typescript-eslint/consistent-type-assertions": ["warn", { "assertionStyle": "as" }],
-        "@typescript-eslint/explicit-function-return-type": "error",
-        "@typescript-eslint/explicit-member-accessibility": ["error", { "overrides": { "constructors": "no-public" } }],
+        "@typescript-eslint/consistent-type-assertions": ["off", { "assertionStyle": "as" }],
+        "@typescript-eslint/explicit-function-return-type": "off",
+        "@typescript-eslint/explicit-member-accessibility": ["off"],
         // https://github.com/typescript-eslint/typescript-eslint/issues/977
         "@typescript-eslint/lines-between-class-members": "off",
         "@typescript-eslint/member-delimiter-style": "error",
@@ -95,9 +94,10 @@
             { "selector": "property", "format": null },
             { "selector": "typeProperty", "format": null },
             { "selector": "typeLike", "format": ["StrictPascalCase"] },
-            { "selector": "enumMember", "format": ["UPPER_CASE"] }
+            { "selector": "enumMember", "format": ["UPPER_CASE"] },
+            { "selector": "interface", "format": ["PascalCase"]}
         ],
-        "@typescript-eslint/no-dupe-class-members": "error",
+        "@typescript-eslint/no-dupe-class-members": "off",
         "@typescript-eslint/no-duplicate-imports": "error",
         "@typescript-eslint/no-floating-promises": ["error", { "ignoreIIFE": true, "ignoreVoid": true }],
         "@typescript-eslint/no-inferrable-types": ["error", { "ignoreParameters": true, "ignoreProperties": true }],
@@ -111,18 +111,31 @@
         "@typescript-eslint/no-unsafe-assignment": "off",
         "@typescript-eslint/no-unsafe-member-access": "off",
         "@typescript-eslint/no-unused-expressions": "error",
+        "@typescript-eslint/no-unused-vars": "warn",
         "@typescript-eslint/object-curly-spacing": ["error", "always"],
         "@typescript-eslint/prefer-includes": "off",
         "@typescript-eslint/prefer-optional-chain": "error",
         "@typescript-eslint/promise-function-async": "error",
         "@typescript-eslint/restrict-template-expressions": "off",
         "@typescript-eslint/return-await": "error",
+        "@typescript-eslint/require-await": "warn",
         "@typescript-eslint/typedef": [
-            "error",
+            "off",
             { "arrowParameter": true, "memberVariableDeclaration": true, "parameter": true, "propertyDeclaration": true }
         ],
         "@typescript-eslint/unbound-method": ["error", { "ignoreStatic": true }],
-
-        "sonarjs/no-duplicate-string": "off"
+        "@typescript-eslint/no-unsafe-argument": "off",
+        "@typescript-eslint/no-unsafe-return": "warn",
+        "@typescript-eslint/no-unsafe-call": "off",
+        "@typescript-eslint/ban-types": "off",
+        "@typescript-eslint/dot-notation": "off",
+        "sonarjs/no-duplicate-string": "off",
+        "sonarjs/no-all-duplicated-branches": "off",
+        "object-shorthand": "off",
+        "max-classes-per-file": "off",
+        "new-cap": "off",
+        "no-plusplus": "off",
+        "type-only": "off",
+        "no-tabs": "off"
     }
 }

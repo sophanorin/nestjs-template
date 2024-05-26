@@ -12,7 +12,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
         return user;
     }
 
-    public getRequest(context: ExecutionContext): Request {
+    public override getRequest(context: ExecutionContext): Request {
         return context.switchToHttp().getRequest<Request>();
     }
 }
