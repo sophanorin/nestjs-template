@@ -54,7 +54,7 @@
     "graphql": "^16.8.1",
     "graphql-tools": "^9.0.1",
     "helmet": "^7.1.0",
-    "mysql2": "^3.9.7",
+    "mysql2": "^3.9.8",
     "nanoid": "^5.0.7",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
