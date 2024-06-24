@@ -10,6 +10,7 @@ import {
     InternalServerErrorException,
     ParseIntPipe,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 
 import type { User } from '../../../entity/user';
 import { CreateDto, UpdateDto } from '../dto';
@@ -18,6 +19,7 @@ import { CrudService } from '../providers';
 /**
  * route /api/v1/crud/*
  */
+@ApiTags('crud')
 @Controller('crud')
 export class CrudController {
     constructor(private crud: CrudService) {}

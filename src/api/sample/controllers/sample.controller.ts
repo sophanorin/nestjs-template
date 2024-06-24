@@ -1,4 +1,5 @@
 import { BadRequestException, Body, Controller, Get, Param, ParseIntPipe, Post, Query, Req, Res, UseGuards } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import type { Request, Response } from 'express';
 
 import { JwtAuthGuard } from '../../../auth';
@@ -11,6 +12,7 @@ import { DatabaseService } from '../providers';
 /**
  * route /api/v1/sample/*
  */
+@ApiTags('sample')
 @UseGuards(RolesGuard)
 @UseGuards(JwtAuthGuard)
 @Controller('sample')

@@ -1,4 +1,5 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
+import { webcrypto } from 'crypto';
 import type { Request, Response } from 'express';
 
 import { Logger } from '../providers';
@@ -18,11 +19,11 @@ export class LoggerMiddleware implements NestMiddleware {
             return next();
         }
 
-        req.id = req.header('X-Request-Id') || crypto.randomUUID();
+        req.id = req.header('X-Request-Id') || webcrypto.randomUUID();
         res.setHeader('X-Request-Id', req.id);
 
         const user = req.user?.userId || '';
-        this.logger.log(`${req.method} ${req.originalUrl} - ${req.ip.replace('::ffff:', '')} ${user}`);
+        this.logger.log(`${req.method} ${req.originalUrl} - ${String(req.ip).replace('::ffff:', '')} ${user}`);
 
         return next();
     }

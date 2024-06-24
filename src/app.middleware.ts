@@ -1,4 +1,5 @@
 import type { INestApplication } from '@nestjs/common';
+import * as bodyParser from 'body-parser';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
@@ -21,6 +22,7 @@ export function middleware(app: INestApplication): INestApplication {
             cookie            : { secure: isProduction },
         }),
     );
+    app.use(bodyParser.json());
     app.use(passport.initialize());
     app.use(passport.session());
 

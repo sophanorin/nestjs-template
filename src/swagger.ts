@@ -2,6 +2,7 @@ import { Logger as NestLogger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
+import { middleware } from './app.middleware';
 import { AppModule } from './app.module';
 
 /**
@@ -18,6 +19,9 @@ async function bootstrap(): Promise<string> {
         .build();
     const document = SwaggerModule.createDocument(app, options);
     SwaggerModule.setup('api', app, document);
+
+    // Express Middleware
+    middleware(app);
 
     await app.listen(process.env.PORT || 8181);
 
